@@ -6,8 +6,8 @@ import speech_recognition as sr
 from collections import deque
 
 # Replace with your actual OpenAI and ElevenLabs API keys which planets are in the solar system? answer in one sentance very short
-openai_api_key = "sk-proj-IkoEUnBveOfoGdO9aSvWT3BlbkFJaLZXKAk77tOj4LJU5IZ8"
-elevenlabs_api_key = "5fd0d7dee929e4ea7c8632073ac47ab3"
+openai_api_key = "your openai api key"
+elevenlabs_api_key = "your 11labs api key"
 # Initialize the clients
 set_api_key(elevenlabs_api_key)
 client = OpenAI(api_key=openai_api_key)
