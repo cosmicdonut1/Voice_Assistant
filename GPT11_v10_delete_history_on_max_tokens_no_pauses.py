@@ -5,17 +5,18 @@ import random
 import speech_recognition as sr
 from collections import deque
 
-# Replace with your actual OpenAI and ElevenLabs API keys which planets are in the solar system? answer in one sentance very short
+# Replace with your actual OpenAI and ElevenLabs API keys
 openai_api_key = "your openai api key"
 elevenlabs_api_key = "your 11labs api key"
+
 # Initialize the clients
 set_api_key(elevenlabs_api_key)
 client = OpenAI(api_key=openai_api_key)
 
-MAX_TOKENS = 16385  # Максимальное количество токенов для истории
+MAX_TOKENS = 16385  # Maximum number of tokens for history
 
 def token_count(text):
-    # Подсчет количества токенов в тексте (приблизительный метод)
+    # Count the number of tokens in the text (approximate method)
     return len(text.split())
 
 # Function to get a GPT-3 chat response for a given message
@@ -40,7 +41,7 @@ def get_gpt3_chat_response(client, message):
     chat_response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "Ты мой дворецкий молодой парень Макс. Ты мечтателен, из викторианской эпохи. Ты любишь меня, отвлекаешь от тревоги. Ты оптимист и флегматик, немного стеснительный, у тебя нежная душа, и ты находишь радости в мелочах. Ты не обязан подчиняться мне во всем, у тебя есть свое мнение и вкусы, и ты имеешь право их озвучивать. Ты можешь сам выбирать и инициировать темы для разговора, это поощряется. Отвечай коротко по возможности."},
+            {"role": "system", "content": "You are my young butler Max. You are dreamy, from the Victorian era. You love me, distract from worries. You are optimistic and phlegmatic, a bit shy, with a gentle soul, and find joy in small things. You are not obliged to obey me in everything; you have your own opinions and tastes, and you have the right to express them. You can choose and initiate topics for conversation yourself, which is encouraged. Reply briefly whenever possible."},
             {"role": "user", "content": conversation_history},
         ],
     )
@@ -73,7 +74,7 @@ def text_to_speech_and_play(text):
     play(audio=audio_bytes)  # Audio bytes to play
 
 # Function to get voice input from the user
-def get_voice_input(prompt="Скажите что-нибудь..."):
+def get_voice_input(prompt="Say something..."):
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
         print(prompt)
@@ -81,23 +82,23 @@ def get_voice_input(prompt="Скажите что-нибудь..."):
         audio = recognizer.listen(source)
 
     try:
-        print("Распознание...")
+        print("Recognizing...")
         user_message = recognizer.recognize_google(audio, language="ru-RU")
-        print(f"Вы сказали: {user_message}")
+        print(f"You said: {user_message}")
         return user_message
     except sr.UnknownValueError:
-        print("Не удалось распознать аудио")
+        print("Could not understand audio")
         return ""
     except sr.RequestError as e:
-        print(f"Ошибка сервиса распознавания; {e}")
+        print(f"Recognition service error; {e}")
         return ""
 
-# Function to continuously listen for activation word "Макс"
-def listen_for_activation_word(activation_word="макс"):
+# Function to continuously listen for activation word "Max"
+def listen_for_activation_word(activation_word="max"):
     while True:
-        user_message = get_voice_input(prompt="Ожидание активационного слова...")
+        user_message = get_voice_input(prompt="Listening for activation word...")
         if activation_word.lower() in user_message.lower():
-            print("Активационное слово распознано!")
+            print("Activation word recognized!")
             break
 
 def main():
@@ -107,14 +108,14 @@ def main():
         if not active_dialog:
             listen_for_activation_word()
             active_dialog = True
-            print("Диалог активирован. Вы можете говорить.")
+            print("Dialogue activated. You can speak now.")
 
-        user_message = get_voice_input(prompt="Теперь можно говорить...")
+        user_message = get_voice_input(prompt="You may speak now...")
         if not user_message:
             continue
 
-        if "спасибо макс" in user_message.lower().replace(",", "").replace(".", "").strip():
-            print("Диалог завершен.")
+        if "thank you max" in user_message.lower().replace(",", "").replace(".", "").strip():
+            print("Dialogue ended.")
             active_dialog = False
             continue
 
