@@ -31,7 +31,7 @@ To run this project, you'll need:
    - Sets up the OpenAI and ElevenLabs clients using provided API keys.
 
 2. **Listening for Activation:**
-   - Continuously listens for the activation word "Макс" (russian, change it to your activation word if you want, it understands any language). Once detected, the conversation mode is activated.
+   - Continuously listens for the activation word "Max" (english, change it to your activation word if you want, it understands any language). Once detected, the conversation mode is activated.
 
 3. **Voice Input:**
    - Captures user voice input and converts it to text using the Google Speech Recognition API.
